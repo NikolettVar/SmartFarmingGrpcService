@@ -1,0 +1,32 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "grpc.smartfarming";
+option java_outer_classname = "EggProductionServiceImpl";
+
+service EggProductionService{
+
+	//unary type rpc service: 1 request is sent by client, 1 response received from server
+ 	rpc feedingCalculator(CalculateRequest) returns(CalculateResponse){}
+
+	//client streaming rpc service: client sends a stream of requests, receives 1 response from server
+  	rpc weeklyTotalEggCount(stream DailyEggCount) returns (WeeklyEggCount) {}
+
+
+}
+
+message CalculateRequest {
+ int32 numberOfHens = 1;
+}
+
+message CalculateResponse {
+   double weeklyFoodAmount = 1;
+
+}
+
+message DailyEggCount{
+	int32 dailyEggCount = 1;
+}
+
+message WeeklyEggCount{
+	int32 weeklyEggCount = 1;
+}

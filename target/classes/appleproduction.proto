@@ -1,0 +1,31 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "grpc.smartfarming";
+option java_outer_classname = "AppleProductionServiceImpl";
+
+service AppleProductionService{
+
+	//server streaming rpc service: 1 request is sent by client, server sends a stream of responses
+ 	rpc feedingCalculator(ApplePrice) returns(stream WeeklyApplePrice){}
+
+	//bidirectional streaming rpc service: client sends a stream of requests, receives a stream of responses from server
+  	rpc weeklyTotalEggCount(stream WeeklyAppleSale) returns (WeeklyAppleSaleValue) {}
+
+}
+
+message ApplePrice {
+ string appleSalesPrice = 1;
+}
+
+message WeeklyApplePrice {
+   double weeklyApplePrice = 1;
+
+}
+
+message WeeklyAppleSale{
+	double weeklyAppleSaleVolume = 1;
+}
+
+message WeeklyAppleSaleValue{
+	double weeklyAppleSaleValue = 1;
+}
