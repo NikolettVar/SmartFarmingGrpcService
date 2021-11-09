@@ -6,10 +6,10 @@ option java_outer_classname = "AppleProductionServiceImpl";
 service AppleProductionService{
 
 	//server streaming rpc service: 1 request is sent by client, server sends a stream of responses
- 	rpc feedingCalculator(ApplePrice) returns(stream WeeklyApplePrice){}
+ 	rpc applePriceChecker(ApplePrice) returns (stream WeeklyApplePrice){}
 
 	//bidirectional streaming rpc service: client sends a stream of requests, receives a stream of responses from server
-  	rpc weeklyTotalEggCount(stream WeeklyAppleSale) returns (WeeklyAppleSaleValue) {}
+  	rpc weeklyAppleSales(stream WeeklyAppleSale) returns (stream WeeklyAppleSaleValue) {}
 
 }
 

@@ -28,67 +28,67 @@ public final class AppleProductionServiceGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<grpc.smartfarming.ApplePrice,
-      grpc.smartfarming.WeeklyApplePrice> getFeedingCalculatorMethod;
+      grpc.smartfarming.WeeklyApplePrice> getApplePriceCheckerMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "feedingCalculator",
+      fullMethodName = SERVICE_NAME + '/' + "applePriceChecker",
       requestType = grpc.smartfarming.ApplePrice.class,
       responseType = grpc.smartfarming.WeeklyApplePrice.class,
       methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
   public static io.grpc.MethodDescriptor<grpc.smartfarming.ApplePrice,
-      grpc.smartfarming.WeeklyApplePrice> getFeedingCalculatorMethod() {
-    io.grpc.MethodDescriptor<grpc.smartfarming.ApplePrice, grpc.smartfarming.WeeklyApplePrice> getFeedingCalculatorMethod;
-    if ((getFeedingCalculatorMethod = AppleProductionServiceGrpc.getFeedingCalculatorMethod) == null) {
+      grpc.smartfarming.WeeklyApplePrice> getApplePriceCheckerMethod() {
+    io.grpc.MethodDescriptor<grpc.smartfarming.ApplePrice, grpc.smartfarming.WeeklyApplePrice> getApplePriceCheckerMethod;
+    if ((getApplePriceCheckerMethod = AppleProductionServiceGrpc.getApplePriceCheckerMethod) == null) {
       synchronized (AppleProductionServiceGrpc.class) {
-        if ((getFeedingCalculatorMethod = AppleProductionServiceGrpc.getFeedingCalculatorMethod) == null) {
-          AppleProductionServiceGrpc.getFeedingCalculatorMethod = getFeedingCalculatorMethod = 
+        if ((getApplePriceCheckerMethod = AppleProductionServiceGrpc.getApplePriceCheckerMethod) == null) {
+          AppleProductionServiceGrpc.getApplePriceCheckerMethod = getApplePriceCheckerMethod = 
               io.grpc.MethodDescriptor.<grpc.smartfarming.ApplePrice, grpc.smartfarming.WeeklyApplePrice>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
-                  "AppleProductionService", "feedingCalculator"))
+                  "AppleProductionService", "applePriceChecker"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   grpc.smartfarming.ApplePrice.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   grpc.smartfarming.WeeklyApplePrice.getDefaultInstance()))
-                  .setSchemaDescriptor(new AppleProductionServiceMethodDescriptorSupplier("feedingCalculator"))
+                  .setSchemaDescriptor(new AppleProductionServiceMethodDescriptorSupplier("applePriceChecker"))
                   .build();
           }
         }
      }
-     return getFeedingCalculatorMethod;
+     return getApplePriceCheckerMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<grpc.smartfarming.WeeklyAppleSale,
-      grpc.smartfarming.WeeklyAppleSaleValue> getWeeklyTotalEggCountMethod;
+      grpc.smartfarming.WeeklyAppleSaleValue> getWeeklyAppleSalesMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "weeklyTotalEggCount",
+      fullMethodName = SERVICE_NAME + '/' + "weeklyAppleSales",
       requestType = grpc.smartfarming.WeeklyAppleSale.class,
       responseType = grpc.smartfarming.WeeklyAppleSaleValue.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
   public static io.grpc.MethodDescriptor<grpc.smartfarming.WeeklyAppleSale,
-      grpc.smartfarming.WeeklyAppleSaleValue> getWeeklyTotalEggCountMethod() {
-    io.grpc.MethodDescriptor<grpc.smartfarming.WeeklyAppleSale, grpc.smartfarming.WeeklyAppleSaleValue> getWeeklyTotalEggCountMethod;
-    if ((getWeeklyTotalEggCountMethod = AppleProductionServiceGrpc.getWeeklyTotalEggCountMethod) == null) {
+      grpc.smartfarming.WeeklyAppleSaleValue> getWeeklyAppleSalesMethod() {
+    io.grpc.MethodDescriptor<grpc.smartfarming.WeeklyAppleSale, grpc.smartfarming.WeeklyAppleSaleValue> getWeeklyAppleSalesMethod;
+    if ((getWeeklyAppleSalesMethod = AppleProductionServiceGrpc.getWeeklyAppleSalesMethod) == null) {
       synchronized (AppleProductionServiceGrpc.class) {
-        if ((getWeeklyTotalEggCountMethod = AppleProductionServiceGrpc.getWeeklyTotalEggCountMethod) == null) {
-          AppleProductionServiceGrpc.getWeeklyTotalEggCountMethod = getWeeklyTotalEggCountMethod = 
+        if ((getWeeklyAppleSalesMethod = AppleProductionServiceGrpc.getWeeklyAppleSalesMethod) == null) {
+          AppleProductionServiceGrpc.getWeeklyAppleSalesMethod = getWeeklyAppleSalesMethod = 
               io.grpc.MethodDescriptor.<grpc.smartfarming.WeeklyAppleSale, grpc.smartfarming.WeeklyAppleSaleValue>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
               .setFullMethodName(generateFullMethodName(
-                  "AppleProductionService", "weeklyTotalEggCount"))
+                  "AppleProductionService", "weeklyAppleSales"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   grpc.smartfarming.WeeklyAppleSale.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   grpc.smartfarming.WeeklyAppleSaleValue.getDefaultInstance()))
-                  .setSchemaDescriptor(new AppleProductionServiceMethodDescriptorSupplier("weeklyTotalEggCount"))
+                  .setSchemaDescriptor(new AppleProductionServiceMethodDescriptorSupplier("weeklyAppleSales"))
                   .build();
           }
         }
      }
-     return getWeeklyTotalEggCountMethod;
+     return getWeeklyAppleSalesMethod;
   }
 
   /**
@@ -123,9 +123,9 @@ public final class AppleProductionServiceGrpc {
      *server streaming rpc service: 1 request is sent by client, server sends a stream of responses
      * </pre>
      */
-    public void feedingCalculator(grpc.smartfarming.ApplePrice request,
+    public void applePriceChecker(grpc.smartfarming.ApplePrice request,
         io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyApplePrice> responseObserver) {
-      asyncUnimplementedUnaryCall(getFeedingCalculatorMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getApplePriceCheckerMethod(), responseObserver);
     }
 
     /**
@@ -133,27 +133,27 @@ public final class AppleProductionServiceGrpc {
      *bidirectional streaming rpc service: client sends a stream of requests, receives a stream of responses from server
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyAppleSale> weeklyTotalEggCount(
+    public io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyAppleSale> weeklyAppleSales(
         io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyAppleSaleValue> responseObserver) {
-      return asyncUnimplementedStreamingCall(getWeeklyTotalEggCountMethod(), responseObserver);
+      return asyncUnimplementedStreamingCall(getWeeklyAppleSalesMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            getFeedingCalculatorMethod(),
+            getApplePriceCheckerMethod(),
             asyncServerStreamingCall(
               new MethodHandlers<
                 grpc.smartfarming.ApplePrice,
                 grpc.smartfarming.WeeklyApplePrice>(
-                  this, METHODID_FEEDING_CALCULATOR)))
+                  this, METHODID_APPLE_PRICE_CHECKER)))
           .addMethod(
-            getWeeklyTotalEggCountMethod(),
-            asyncClientStreamingCall(
+            getWeeklyAppleSalesMethod(),
+            asyncBidiStreamingCall(
               new MethodHandlers<
                 grpc.smartfarming.WeeklyAppleSale,
                 grpc.smartfarming.WeeklyAppleSaleValue>(
-                  this, METHODID_WEEKLY_TOTAL_EGG_COUNT)))
+                  this, METHODID_WEEKLY_APPLE_SALES)))
           .build();
     }
   }
@@ -181,10 +181,10 @@ public final class AppleProductionServiceGrpc {
      *server streaming rpc service: 1 request is sent by client, server sends a stream of responses
      * </pre>
      */
-    public void feedingCalculator(grpc.smartfarming.ApplePrice request,
+    public void applePriceChecker(grpc.smartfarming.ApplePrice request,
         io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyApplePrice> responseObserver) {
       asyncServerStreamingCall(
-          getChannel().newCall(getFeedingCalculatorMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getApplePriceCheckerMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -192,10 +192,10 @@ public final class AppleProductionServiceGrpc {
      *bidirectional streaming rpc service: client sends a stream of requests, receives a stream of responses from server
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyAppleSale> weeklyTotalEggCount(
+    public io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyAppleSale> weeklyAppleSales(
         io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyAppleSaleValue> responseObserver) {
-      return asyncClientStreamingCall(
-          getChannel().newCall(getWeeklyTotalEggCountMethod(), getCallOptions()), responseObserver);
+      return asyncBidiStreamingCall(
+          getChannel().newCall(getWeeklyAppleSalesMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -222,10 +222,10 @@ public final class AppleProductionServiceGrpc {
      *server streaming rpc service: 1 request is sent by client, server sends a stream of responses
      * </pre>
      */
-    public java.util.Iterator<grpc.smartfarming.WeeklyApplePrice> feedingCalculator(
+    public java.util.Iterator<grpc.smartfarming.WeeklyApplePrice> applePriceChecker(
         grpc.smartfarming.ApplePrice request) {
       return blockingServerStreamingCall(
-          getChannel(), getFeedingCalculatorMethod(), getCallOptions(), request);
+          getChannel(), getApplePriceCheckerMethod(), getCallOptions(), request);
     }
   }
 
@@ -248,8 +248,8 @@ public final class AppleProductionServiceGrpc {
     }
   }
 
-  private static final int METHODID_FEEDING_CALCULATOR = 0;
-  private static final int METHODID_WEEKLY_TOTAL_EGG_COUNT = 1;
+  private static final int METHODID_APPLE_PRICE_CHECKER = 0;
+  private static final int METHODID_WEEKLY_APPLE_SALES = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -268,8 +268,8 @@ public final class AppleProductionServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_FEEDING_CALCULATOR:
-          serviceImpl.feedingCalculator((grpc.smartfarming.ApplePrice) request,
+        case METHODID_APPLE_PRICE_CHECKER:
+          serviceImpl.applePriceChecker((grpc.smartfarming.ApplePrice) request,
               (io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyApplePrice>) responseObserver);
           break;
         default:
@@ -282,8 +282,8 @@ public final class AppleProductionServiceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_WEEKLY_TOTAL_EGG_COUNT:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.weeklyTotalEggCount(
+        case METHODID_WEEKLY_APPLE_SALES:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.weeklyAppleSales(
               (io.grpc.stub.StreamObserver<grpc.smartfarming.WeeklyAppleSaleValue>) responseObserver);
         default:
           throw new AssertionError();
@@ -336,8 +336,8 @@ public final class AppleProductionServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new AppleProductionServiceFileDescriptorSupplier())
-              .addMethod(getFeedingCalculatorMethod())
-              .addMethod(getWeeklyTotalEggCountMethod())
+              .addMethod(getApplePriceCheckerMethod())
+              .addMethod(getWeeklyAppleSalesMethod())
               .build();
         }
       }
