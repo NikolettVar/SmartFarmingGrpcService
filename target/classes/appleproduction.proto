@@ -1,8 +1,10 @@
 syntax = "proto3";
 option java_multiple_files = true;
-option java_package = "grpc.smartfarming";
+option java_package = "grpc.apple.smartfarming";
 option java_outer_classname = "AppleProductionServiceImpl";
 
+
+//service definition
 service AppleProductionService{
 
 	//server streaming rpc service: 1 request is sent by client, server sends a stream of responses
@@ -13,19 +15,23 @@ service AppleProductionService{
 
 }
 
+//request message contains a string
 message ApplePrice {
- string appleSalesPrice = 1;
+ 	string appleSalesPrice = 1;
 }
 
+//response messages contain the weekly sales price of apple
 message WeeklyApplePrice {
-   double weeklyApplePrice = 1;
+  	double weeklyApplePrice = 1;
 
 }
 
+//request messages contain a double, the amount of apples sold weekly
 message WeeklyAppleSale{
 	double weeklyAppleSaleVolume = 1;
 }
 
+//response messages contain the weekly value of apple sales
 message WeeklyAppleSaleValue{
 	double weeklyAppleSaleValue = 1;
 }

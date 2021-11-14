@@ -1,6 +1,6 @@
 syntax = "proto3";
 option java_multiple_files = true;
-option java_package = "grpc.smartfarming";
+option java_package = "grpc.egg.smartfarming";
 option java_outer_classname = "EggProductionServiceImpl";
 
 service EggProductionService{
@@ -14,19 +14,23 @@ service EggProductionService{
 
 }
 
+//request message contains an integer value
 message CalculateRequest {
  int32 numberOfHens = 1;
 }
 
+//response message contain a double type, the weekly amount of food the hens need
 message CalculateResponse {
    double weeklyFoodAmount = 1;
 
 }
 
+//request messages contain an integer value, the number of eggs collected daily
 message DailyEggCount{
 	int32 dailyEggCount = 1;
 }
 
+//response message contains an integer value, the weekly total number of eggs collected
 message WeeklyEggCount{
 	int32 weeklyEggCount = 1;
 }
