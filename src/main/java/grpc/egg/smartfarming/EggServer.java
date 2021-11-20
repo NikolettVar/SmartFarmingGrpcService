@@ -33,14 +33,15 @@ public class EggServer extends EggProductionServiceImplBase {
 	//now we define our unary rpc method feedingCalculator()
 	@Override
 	public void feedingCalculator(CalculateRequest request, StreamObserver<CalculateResponse> responseObserver) {
-		System.out.println("EggServer is being called, calculating response: ");
-		//we now read the request, create a response and send back that response
-		//build the reply first
+		System.out.println("EggServer is being called, calculating response...");
 		
+		//we now read the request, create a response and send back that response
+		int userInput = request.getNumberOfHens();
 		double value = Double.NaN;
 		
 		//calculate the feeding needs of the hens for 7 days
-		value = (double) ((request.getNumberOfHens()*0.009)*7);
+		//result is rounded upwards to ensure farm always have sufficient food supply 
+		value = Math.ceil((userInput *0.009)*7);
 		
 		CalculateResponse response = CalculateResponse.newBuilder()
 				//.setWeeklyFoodAmount(request.getNumberOfHens()).build();

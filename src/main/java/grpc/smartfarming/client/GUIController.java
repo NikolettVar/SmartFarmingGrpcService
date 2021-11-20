@@ -5,6 +5,10 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
 
 import grpc.apple.smartfarming.AppleProductionServiceGrpc;
 import grpc.apple.smartfarming.AppleProductionServiceGrpc.AppleProductionServiceBlockingStub;
@@ -42,15 +46,41 @@ public class GUIController {
 	
 	//Unary rpc feedingCalculator implementation
 	//Now, inside a try/catch block we build out our request and reply objects
+	
+	//First we ask the user for an integer input, the number of hens the farm has this week
+	//User input is validated agains empty input and non-numeric input
+
+
+	 String hens = " ";	
+	 int henNumber = 0;		
+	
+	 hens = JOptionPane.showInputDialog(null, "Please enter the number of hens the farm has this week: ");
+	 
+		 if(hens.length() < 1) {
+			   JOptionPane.showMessageDialog(null, "This field cannot be blank. Please enter a numeric value");
+			   hens = JOptionPane.showInputDialog(null, "Please enter the number of hens the farm has this week: ");
+		} 
+		 else {
+			 Pattern p = Pattern.compile("^[0-9]*$");
+		     Matcher m = p.matcher(hens);
+		     if (!m.find()) { // if pattern doesn't match (not found) 
+		      JOptionPane.showMessageDialog(null, "Please enter numbers only ");
+		      hens = JOptionPane.showInputDialog(null, "Please enter the number of hens the farm has this week: ");
+		     }	
+		 }		
+	 
+	 henNumber = Integer.parseInt(hens);	
+	
 	try {
-		CalculateRequest eggRequest1 = CalculateRequest.newBuilder().setNumberOfHens(100).build();
+		CalculateRequest eggRequest1 = CalculateRequest.newBuilder().setNumberOfHens(henNumber).build();
 		CalculateResponse eggResponse1 = eggStub.feedingCalculator(eggRequest1);
 		
+			
 		//here we can print out the response to the console if needed
-		System.out.println("The hens need " + eggResponse1.getWeeklyFoodAmount() + " kgs of food this week. ");
+		System.out.println("The farm's " + henNumber +" hens need " + eggResponse1.getWeeklyFoodAmount() + " kgs of food this week. ");
 		
-		//now we display response in GUI textfield for CA
-		
+		//now we display response in JOptionPane 
+		JOptionPane.showMessageDialog(null, "The farm's " + henNumber + " hens need " + eggResponse1.getWeeklyFoodAmount() + " kgs of food this week.");
 		
 	}catch(StatusRuntimeException e) {
 		e.printStackTrace();
@@ -60,7 +90,7 @@ public class GUIController {
 	}
 	
 	
-	//server streaming method implementation
+	//server streaming rpc applePriceChecker implementation
 	
 	
 	}

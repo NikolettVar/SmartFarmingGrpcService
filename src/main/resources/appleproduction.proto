@@ -15,23 +15,23 @@ service AppleProductionService{
 
 }
 
-//request message contains a string
-message ApplePrice {
- 	string appleSalesPrice = 1;
-}
+	//request message contains a string
+	message ApplePrice {
+	 	string appleSalesPrice = 1;
+	}
 
-//response messages contain the weekly sales price of apple
-message WeeklyApplePrice {
-  	double weeklyApplePrice = 1;
+	//response messages contain the weekly sales price of apple
+	message WeeklyApplePrice {
+	  	double weeklyApplePrice = 1;
 
-}
+	}
 
-//request messages contain a double, the amount of apples sold weekly
-message WeeklyAppleSale{
-	double weeklyAppleSaleVolume = 1;
-}
+	//request messages contain a double, the amount of apples sold weekly
+	message WeeklyAppleSale{
+		double weeklyAppleSaleVolume = 1;
+	}
 
-//response messages contain the weekly value of apple sales
-message WeeklyAppleSaleValue{
-	double weeklyAppleSaleValue = 1;
-}
+	//response messages contain the weekly value of apple sales
+	message WeeklyAppleSaleValue{
+		double weeklyAppleSaleValue = 1;
+	}
