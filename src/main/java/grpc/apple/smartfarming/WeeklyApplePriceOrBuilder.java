@@ -8,7 +8,7 @@ public interface WeeklyApplePriceOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>double weeklyApplePrice = 1;</code>
+   * <code>double applePricesPerWeek = 1;</code>
    */
-  double getWeeklyApplePrice();
+  double getApplePricesPerWeek();
 }

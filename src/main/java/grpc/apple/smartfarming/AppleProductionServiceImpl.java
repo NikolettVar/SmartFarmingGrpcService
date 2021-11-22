@@ -44,16 +44,16 @@ public final class AppleProductionServiceImpl {
   static {
     java.lang.String[] descriptorData = {
       "\n\025appleproduction.proto\"%\n\nApplePrice\022\027\n" +
-      "\017appleSalesPrice\030\001 \001(\t\",\n\020WeeklyApplePri" +
-      "ce\022\030\n\020weeklyApplePrice\030\001 \001(\001\"0\n\017WeeklyAp" +
-      "pleSale\022\035\n\025weeklyAppleSaleVolume\030\001 \001(\001\"4" +
-      "\n\024WeeklyAppleSaleValue\022\034\n\024weeklyAppleSal" +
-      "eValue\030\001 \001(\0012\224\001\n\026AppleProductionService\022" +
-      "7\n\021applePriceChecker\022\013.ApplePrice\032\021.Week" +
-      "lyApplePrice\"\0000\001\022A\n\020weeklyAppleSales\022\020.W" +
-      "eeklyAppleSale\032\025.WeeklyAppleSaleValue\"\000(" +
-      "\0010\001B7\n\027grpc.apple.smartfarmingB\032ApplePro" +
-      "ductionServiceImplP\001b\006proto3"
+      "\017appleSalesPrice\030\001 \001(\t\".\n\020WeeklyApplePri" +
+      "ce\022\032\n\022applePricesPerWeek\030\001 \001(\001\"0\n\017Weekly" +
+      "AppleSale\022\035\n\025weeklyAppleSaleVolume\030\001 \001(\001" +
+      "\"4\n\024WeeklyAppleSaleValue\022\034\n\024weeklyAppleS" +
+      "aleValue\030\001 \001(\0012\224\001\n\026AppleProductionServic" +
+      "e\0227\n\021applePriceChecker\022\013.ApplePrice\032\021.We" +
+      "eklyApplePrice\"\0000\001\022A\n\020weeklyAppleSales\022\020" +
+      ".WeeklyAppleSale\032\025.WeeklyAppleSaleValue\"" +
+      "\000(\0010\001B7\n\027grpc.apple.smartfarmingB\032AppleP" +
+      "roductionServiceImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -78,7 +78,7 @@ public final class AppleProductionServiceImpl {
     internal_static_WeeklyApplePrice_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_WeeklyApplePrice_descriptor,
-        new java.lang.String[] { "WeeklyApplePrice", });
+        new java.lang.String[] { "ApplePricesPerWeek", });
     internal_static_WeeklyAppleSale_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_WeeklyAppleSale_fieldAccessorTable = new

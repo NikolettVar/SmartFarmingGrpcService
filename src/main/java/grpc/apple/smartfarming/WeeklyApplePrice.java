@@ -20,7 +20,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private WeeklyApplePrice() {
-    weeklyApplePrice_ = 0D;
+    applePricesPerWeek_ = 0D;
   }
 
   @java.lang.Override
@@ -49,7 +49,7 @@ private static final long serialVersionUID = 0L;
             break;
           case 9: {
 
-            weeklyApplePrice_ = input.readDouble();
+            applePricesPerWeek_ = input.readDouble();
             break;
           }
           default: {
@@ -84,13 +84,13 @@ private static final long serialVersionUID = 0L;
             grpc.apple.smartfarming.WeeklyApplePrice.class, grpc.apple.smartfarming.WeeklyApplePrice.Builder.class);
   }
 
-  public static final int WEEKLYAPPLEPRICE_FIELD_NUMBER = 1;
-  private double weeklyApplePrice_;
+  public static final int APPLEPRICESPERWEEK_FIELD_NUMBER = 1;
+  private double applePricesPerWeek_;
   /**
-   * <code>double weeklyApplePrice = 1;</code>
+   * <code>double applePricesPerWeek = 1;</code>
    */
-  public double getWeeklyApplePrice() {
-    return weeklyApplePrice_;
+  public double getApplePricesPerWeek() {
+    return applePricesPerWeek_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -107,8 +107,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (weeklyApplePrice_ != 0D) {
-      output.writeDouble(1, weeklyApplePrice_);
+    if (applePricesPerWeek_ != 0D) {
+      output.writeDouble(1, applePricesPerWeek_);
     }
     unknownFields.writeTo(output);
   }
@@ -119,9 +119,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (weeklyApplePrice_ != 0D) {
+    if (applePricesPerWeek_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(1, weeklyApplePrice_);
+        .computeDoubleSize(1, applePricesPerWeek_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -140,9 +140,9 @@ private static final long serialVersionUID = 0L;
 
     boolean result = true;
     result = result && (
-        java.lang.Double.doubleToLongBits(getWeeklyApplePrice())
+        java.lang.Double.doubleToLongBits(getApplePricesPerWeek())
         == java.lang.Double.doubleToLongBits(
-            other.getWeeklyApplePrice()));
+            other.getApplePricesPerWeek()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -154,9 +154,9 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + WEEKLYAPPLEPRICE_FIELD_NUMBER;
+    hash = (37 * hash) + APPLEPRICESPERWEEK_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getWeeklyApplePrice()));
+        java.lang.Double.doubleToLongBits(getApplePricesPerWeek()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -294,7 +294,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      weeklyApplePrice_ = 0D;
+      applePricesPerWeek_ = 0D;
 
       return this;
     }
@@ -322,7 +322,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public grpc.apple.smartfarming.WeeklyApplePrice buildPartial() {
       grpc.apple.smartfarming.WeeklyApplePrice result = new grpc.apple.smartfarming.WeeklyApplePrice(this);
-      result.weeklyApplePrice_ = weeklyApplePrice_;
+      result.applePricesPerWeek_ = applePricesPerWeek_;
       onBuilt();
       return result;
     }
@@ -371,8 +371,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(grpc.apple.smartfarming.WeeklyApplePrice other) {
       if (other == grpc.apple.smartfarming.WeeklyApplePrice.getDefaultInstance()) return this;
-      if (other.getWeeklyApplePrice() != 0D) {
-        setWeeklyApplePrice(other.getWeeklyApplePrice());
+      if (other.getApplePricesPerWeek() != 0D) {
+        setApplePricesPerWeek(other.getApplePricesPerWeek());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -403,28 +403,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private double weeklyApplePrice_ ;
+    private double applePricesPerWeek_ ;
     /**
-     * <code>double weeklyApplePrice = 1;</code>
+     * <code>double applePricesPerWeek = 1;</code>
      */
-    public double getWeeklyApplePrice() {
-      return weeklyApplePrice_;
+    public double getApplePricesPerWeek() {
+      return applePricesPerWeek_;
     }
     /**
-     * <code>double weeklyApplePrice = 1;</code>
+     * <code>double applePricesPerWeek = 1;</code>
      */
-    public Builder setWeeklyApplePrice(double value) {
+    public Builder setApplePricesPerWeek(double value) {
       
-      weeklyApplePrice_ = value;
+      applePricesPerWeek_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>double weeklyApplePrice = 1;</code>
+     * <code>double applePricesPerWeek = 1;</code>
      */
-    public Builder clearWeeklyApplePrice() {
+    public Builder clearApplePricesPerWeek() {
       
-      weeklyApplePrice_ = 0D;
+      applePricesPerWeek_ = 0D;
       onChanged();
       return this;
     }

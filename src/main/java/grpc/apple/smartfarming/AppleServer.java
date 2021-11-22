@@ -68,31 +68,41 @@ public class AppleServer {
 			System.out.println("The request from the client is: " + priceRequest);
 			
 			//we can now build the responses the server will send back as a stream
-			double price = 2.29;
+			double price1 = 2.29;
+			double price2 = 2.19;
+			double price3 = 2.03;
+			double price4 = 2.08;
 			
 			
-			for(int i = 0; i <= 4; i++) {
-				WeeklyApplePrice.Builder response = WeeklyApplePrice.newBuilder();
+			WeeklyApplePrice.Builder response = WeeklyApplePrice.newBuilder();
+			
+			//we will have 4 responses, showing the sales price per kg of apple over 4 weeks
+			response.setApplePricesPerWeek(price1).build();	
+			responseObserver.onNext(response.build());
 				
-				response.setWeeklyApplePrice(price).build();			
+			response.setApplePricesPerWeek(price2).build();	
+			responseObserver.onNext(response.build());
 				
-				responseObserver.onNext(response.build());
+			response.setApplePricesPerWeek(price3).build();	
+			responseObserver.onNext(response.build());
 				
-				try {
-					//wait for a second
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}				
+			response.setApplePricesPerWeek(price4).build();	
+			responseObserver.onNext(response.build());
 				
-			}
+			try {
+				//wait for a second
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {				
+				e.printStackTrace();
+			}				
+				
+			
 			
 			responseObserver.onCompleted();
 		}
 	}
 	
 	
-	
+	//bidirectional rpc implementation comes here
 	
 }

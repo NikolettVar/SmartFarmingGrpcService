@@ -18,10 +18,12 @@ public class EggServer extends EggProductionServiceImplBase {
 		
 	//now we build out our eggServer within Exception handling try/catch block
 		try {
+			System.out.println("Egg Server starting up...");
 			Server server = ServerBuilder.forPort(port)
 				.addService(eggServer)
 				.build()
 				.start();
+			System.out.println("Egg Server is running on port number " + port);
 		server.awaitTermination();
 		
 		}catch(Exception e) {
@@ -50,4 +52,6 @@ public class EggServer extends EggProductionServiceImplBase {
 		responseObserver.onNext(response);
 		responseObserver.onCompleted();
 	}
+	
+	//client streaming rpc implementation comes here
 }

@@ -22,7 +22,7 @@ service AppleProductionService{
 
 	//response messages contain the weekly sales price of apple
 	message WeeklyApplePrice {
-	  	double weeklyApplePrice = 1;
+	  	double applePricesPerWeek = 1;
 
 	}
 
