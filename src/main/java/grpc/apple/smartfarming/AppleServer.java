@@ -19,19 +19,7 @@ public class AppleServer {
 		//we will pass it to the serverBuiler object
 		AppleServer appleServer = new AppleServer();
 		appleServer.start();
-		
-				
-		//now we build out our appleServer within Exception handling try/catch block
-		/*try {
-				Server server = ServerBuilder.forPort(port)
-					.addService(appleServer)
-					.build()
-					.start();
-				server.awaitTermination();
-		}catch(Exception e) {
-				e.printStackTrace();
-		}*/
-
+			
 	}
 	
 	//now we define our start() method to build our appleServer
@@ -100,9 +88,12 @@ public class AppleServer {
 			
 			responseObserver.onCompleted();
 		}
+		
+		//bidirectional rpc implementation comes here
+		
 	}
 	
 	
-	//bidirectional rpc implementation comes here
+	
 	
 }
