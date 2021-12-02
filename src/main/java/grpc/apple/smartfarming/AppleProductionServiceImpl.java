@@ -46,7 +46,7 @@ public final class AppleProductionServiceImpl {
       "\n\025appleproduction.proto\"%\n\nApplePrice\022\027\n" +
       "\017appleSalesPrice\030\001 \001(\t\".\n\020WeeklyApplePri" +
       "ce\022\032\n\022applePricesPerWeek\030\001 \001(\001\"0\n\017Weekly" +
-      "AppleSale\022\035\n\025weeklyAppleSaleVolume\030\001 \001(\001" +
+      "AppleSale\022\035\n\025weeklyAppleSaleVolume\030\001 \001(\005" +
       "\"4\n\024WeeklyAppleSaleValue\022\034\n\024weeklyAppleS" +
       "aleValue\030\001 \001(\0012\224\001\n\026AppleProductionServic" +
       "e\0227\n\021applePriceChecker\022\013.ApplePrice\032\021.We" +

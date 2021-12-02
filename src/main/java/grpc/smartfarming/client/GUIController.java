@@ -5,6 +5,7 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -12,12 +13,13 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-
 import grpc.apple.smartfarming.ApplePrice;
 import grpc.apple.smartfarming.AppleProductionServiceGrpc;
 import grpc.apple.smartfarming.AppleProductionServiceGrpc.AppleProductionServiceBlockingStub;
 import grpc.apple.smartfarming.AppleProductionServiceGrpc.AppleProductionServiceStub;
 import grpc.apple.smartfarming.WeeklyApplePrice;
+import grpc.apple.smartfarming.WeeklyAppleSale;
+import grpc.apple.smartfarming.WeeklyAppleSaleValue;
 import grpc.egg.smartfarming.CalculateRequest;
 import grpc.egg.smartfarming.CalculateResponse;
 import grpc.egg.smartfarming.DailyEggCount;
@@ -94,9 +96,6 @@ public class GUIController {
 		
 	}catch(StatusRuntimeException e) {
 		e.printStackTrace();
-	}finally {
-		//shutdown  egg channel
-		//channelEggs.shutdown().awaitTermination(5, TimeUnit.SECONDS);
 	}
 	
 	System.out.println();
@@ -112,7 +111,7 @@ public class GUIController {
 	 
 	//server streaming rpc applePriceChecker implementation
 	try {
-		//first a request object need to be built
+		//first a request object needs to be built
 		ApplePrice appleRequest1 = ApplePrice.newBuilder().setAppleSalesPrice("Please display apple sales prices in the last 4 weeks ")
 				.build();
 		
@@ -132,18 +131,14 @@ public class GUIController {
 			}
 		}catch(StatusRuntimeException e) {
 			e.printStackTrace();
-		}finally { //remove this when bidirectional done!!!!!!!!!!
-		
-		//when streaming is finished, we can shut down apple channel
-		channelApples.shutdown().awaitTermination(10, TimeUnit.SECONDS);
-		}
-	
+		}	
 	
 	
 	
 	//client streaming rpc weeklyTotalEggCount() client side implementation
 	
-	//for client streaming we need an asynchronous stub, rather than a blocking stub	
+	//for client streaming we need an asynchronous stub, rather than a blocking stub
+	//this way the client does not have to wait for the server to return a response before sending out another message
 	EggProductionServiceStub eggAsyncStub = EggProductionServiceGrpc.newStub(channelEggs);
 	
 	try {
@@ -168,16 +163,16 @@ public class GUIController {
 		@Override
 		public void onCompleted() {			
 			System.out.println("Client streaming rpc process is successfully completed. ");
+			System.out.println();
 		}
 	};
 	
 	//grpc library provides a StreamObserver to create a requestObserver object
 	//we use this to send our stream of outgoing messages from the client to the server
 		
-	StreamObserver<DailyEggCount> requestObserver= eggAsyncStub.weeklyTotalEggCount(responseObserver);
+	StreamObserver<DailyEggCount> requestObserver = eggAsyncStub.weeklyTotalEggCount(responseObserver);
 		
-		//now we obtain user input, the number of eggs collected daily over 7 days	
-		
+	//now we collect user input, the number of eggs collected daily over 7 days			
 	 String dailyEggNumber = " ";	
 	 int dailyEggs = 0;		
 	 int counter = 0;
@@ -186,6 +181,7 @@ public class GUIController {
 	 while(counter <= 6) {
 		 dailyEggNumber = JOptionPane.showInputDialog(null, "Please enter the number of eggs you collected daily in the last 7 days: ");
 		 
+		 	//user input validation ensures that user enters a value and the value must be a numeric one
 			 if(dailyEggNumber.length() < 1) {
 				   JOptionPane.showMessageDialog(null, "This field cannot be blank. Please enter a numeric value");
 				   dailyEggNumber = JOptionPane.showInputDialog(null, "Please enter the number of eggs you collected daily: ");
@@ -199,12 +195,12 @@ public class GUIController {
 			     }	
 			 }		
 		 
-			 //JOPtionPane returns a String value, it needs to be parsed to an int value
+		//JOPtionPane returns a String type, it needs to be parsed to an int value
 		 dailyEggs = Integer.parseInt(dailyEggNumber);		
 	
 		//stream of messages from the client will be built now 7 times
 		requestObserver.onNext(DailyEggCount.newBuilder().setDailyEggCount(dailyEggs).build());
-		Thread.sleep(500);
+		Thread.sleep(400);
 		counter++;		
 	 }	
 		
@@ -225,13 +221,101 @@ public class GUIController {
 	} catch (InterruptedException e) {				
 		System.out.println("Error, closing down channel");
 		e.printStackTrace();
-	}	
+	}
 	
 	
-	//bidirectional streaming client side code
+	
+	//bidirectional streaming  weeklyAppleSales() method, client side implementation
+	
+	//for bidirectional streaming we need an asynchronous stub, rather than a blocking stub
+	//this way the client does not have to wait for the server to return a response before sending out another message
 	AppleProductionServiceStub appleAsynchStub = AppleProductionServiceGrpc.newStub(channelApples);
 	
+	try {
+		
+		//to observe the incoming responses from the server, we need to implement our own StreamObserver first
+		StreamObserver<WeeklyAppleSaleValue> responseObserver = new StreamObserver<WeeklyAppleSaleValue>() {
 	
+			
+			int replyCounter = 0;
+			
+			//now we must implement 3 abstract methods of the StreamObserver class: onNext(), onError() and onCompleted()
+			@Override
+			public void onNext(WeeklyAppleSaleValue value) {
+				System.out.println("AppleServer is sending in weekly apple sale values: " + value.getWeeklyAppleSaleValue());
+				JOptionPane.showMessageDialog(null, "Result of bidirectional streaming rpc -> The weekly apple sale is: " + value.getWeeklyAppleSaleValue());
+				replyCounter = replyCounter + 1;
+			}
+	
+			@Override
+			public void onError(Throwable t) {
+				System.out.println("An error occurred. Unable to complete operation.");
+				t.printStackTrace();
+				
+			}
+	
+			@Override
+			public void onCompleted() {
+				System.out.println("Bidirectional streaming rpc process is successfully completed. ");
+				
+			}
+			
+		};
+		
+		
+		//grpc library provides a StreamObserver to create a requestObserver object
+		//we use this to send our stream of outgoing messages from the client to the server
+			
+		StreamObserver<WeeklyAppleSale> requestObserver = appleAsynchStub.weeklyAppleSales(responseObserver);
+		
+		//now we collect user input, the kgs of apples sold weekly in over a 4 week period			
+		 String applesSoldWeekly = " ";	
+		 int soldApplesKg = 0;	
+		 
+		 //a while loop asks the user 4 times to enter weekly apples sales in kg
+		 for(int i = 0; i <= 3; i++) {
+			 applesSoldWeekly = JOptionPane.showInputDialog(null, "Please enter how many kg of apples the farm sold weekly over 4 weeks: ");
+			 
+			//user input validation ensures that user enters a value and the value must be a numeric one
+			 if(applesSoldWeekly.length() < 1) {
+				   JOptionPane.showMessageDialog(null, "This field cannot be blank. Please enter a numeric value");
+				   applesSoldWeekly = JOptionPane.showInputDialog(null, "Please enter the number of eggs you collected daily: ");
+			} 
+			 else {
+				 Pattern p = Pattern.compile("^[0-9]*$");
+			     Matcher m = p.matcher(applesSoldWeekly);
+			     if (!m.find()) { // if pattern doesn't match (not found) 
+			      JOptionPane.showMessageDialog(null, "Please enter numbers only ");
+			      applesSoldWeekly = JOptionPane.showInputDialog(null, "Please enter the number of eggs you collected daily: ");
+			     }	
+			 }		
+		 
+			 //JOPtionPane returns a String type, it needs to be parsed to an int type value
+			 soldApplesKg  = Integer.parseInt(applesSoldWeekly);		
+	
+			
+			//stream of messages from the client will be built 4 times
+			requestObserver.onNext(WeeklyAppleSale.newBuilder().setWeeklyAppleSaleVolume(soldApplesKg).build());
+			Thread.sleep(400);
+		 }
+		 
+		 System.out.println();
+		 System.out.println("Client has now sent its stream of messages to the server. ");
+		
+		requestObserver.onCompleted();		
+		Thread.sleep(10000);
+		
+	}catch(StatusRuntimeException e) {
+		e.printStackTrace();
+	}
+
+	//we are finished using channelApples, we can shut it down now
+		try {
+			channelApples.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {				
+			System.out.println("Error, closing down channel");
+			e.printStackTrace();
+		}	
 
 		
 	

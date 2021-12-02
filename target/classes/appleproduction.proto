@@ -28,7 +28,7 @@ service AppleProductionService{
 
 	//request messages contain a double, the amount of apples sold weekly
 	message WeeklyAppleSale{
-		double weeklyAppleSaleVolume = 1;
+		int32 weeklyAppleSaleVolume = 1;
 	}
 
 	//response messages contain the weekly value of apple sales

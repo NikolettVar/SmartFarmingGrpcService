@@ -5,9 +5,11 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import grpc.apple.smartfarming.AppleProductionServiceGrpc.AppleProductionServiceImplBase;
 import grpc.egg.smartfarming.EggServer;
+import grpc.egg.smartfarming.WeeklyEggCount;
 
 public class AppleServer {
 	
@@ -49,7 +51,7 @@ public class AppleServer {
 	static class AppleServerImpl extends AppleProductionServiceImplBase{
 		@Override
 		public void applePriceChecker(ApplePrice request, StreamObserver<WeeklyApplePrice> responseObserver) {
-			System.out.println("appleServer is being called, returning responses...");
+			System.out.println("Apple Server is being called, returning responses...");
 			
 			//now we can read in the request coming from the client
 			String priceRequest = request.getAppleSalesPrice();
@@ -89,8 +91,88 @@ public class AppleServer {
 			responseObserver.onCompleted();
 		}
 		
-		//bidirectional rpc implementation comes here
+		//bidirectional rpc server side implementation
+		//we need to observe the stream of messages coming in from the client
+		//this will be the return type of the weeklyAppleSales() method
 		
+		@Override
+		public StreamObserver<WeeklyAppleSale> weeklyAppleSales(StreamObserver<WeeklyAppleSaleValue> responseObserver) {
+			
+			System.out.println("AppleServer is being called again, calculating responses...");
+			
+			return new StreamObserver<WeeklyAppleSale>() {
+				
+				//kgs of apple sold weekly in the last 4 weeks are saved in an ArrayList data structure
+				ArrayList<Integer> appleList = new ArrayList<Integer>();
+				
+				//now we must implement 3 abstract methods of the StreamObserver class: onNext(), onError() and onCompleted()
+				
+				//first, we implement onNext()
+				//onNext() method specifies the required actions when the server receives all incoming messages from the client
+
+				@Override
+				public void onNext(WeeklyAppleSale requests) {
+					System.out.println("Receiving weekly apple sale volumes over 4 weeks: " + requests.getWeeklyAppleSaleVolume());
+					
+					
+					//incoming values weekly apple sales in kg are added into the ArrayList
+					appleList.add(requests.getWeeklyAppleSaleVolume());
+				}
+
+				@Override
+				public void onError(Throwable t) {
+					System.out.println("An error occured, unable to complete operation.");
+					t.printStackTrace();
+					
+				}
+
+				//here we create the response when client finished to stream incoming messages
+				@Override
+				public void onCompleted() {
+					
+					double price1 = 2.29;
+					double price2 = 2.19;
+					double price3 = 2.03;
+					double price4 = 2.08;
+					
+					//carrying out calculations
+					//kg of apples sold a week * weekly sales price = weekly sales value
+					double salesValue1 = Math.round (appleList.get(0) * price1);
+					double salesValue2 = Math.round (appleList.get(1) * price2);
+					double salesValue3 = Math.round (appleList.get(2) * price3);
+					double salesValue4 = Math.round (appleList.get(3) * price4);
+					
+							
+				
+					//now we can build the responses the server will send back to the client
+								
+					
+					WeeklyAppleSaleValue.Builder reply = WeeklyAppleSaleValue.newBuilder();
+					
+					//4 responses are built, showing the sales values of apple over 4 weeks
+					reply.setWeeklyAppleSaleValue(salesValue1).build();	
+					responseObserver.onNext(reply.build());
+						
+					reply.setWeeklyAppleSaleValue(salesValue2).build();	
+					responseObserver.onNext(reply.build());
+						
+					reply.setWeeklyAppleSaleValue(salesValue3).build();	
+					responseObserver.onNext(reply.build());
+						
+					reply.setWeeklyAppleSaleValue(salesValue4).build();	
+					responseObserver.onNext(reply.build());
+					
+					System.out.println("The weekly sales values are € : " + salesValue1 + " for week 1, " + salesValue2 + " for week 2, " + salesValue3 + " for week 3, " + salesValue4 + " for week 4. ");						
+
+										
+					responseObserver.onCompleted();
+					
+				}
+			
+			
+			};
+			
+		}
 	}
 	
 	

@@ -20,7 +20,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private WeeklyAppleSale() {
-    weeklyAppleSaleVolume_ = 0D;
+    weeklyAppleSaleVolume_ = 0;
   }
 
   @java.lang.Override
@@ -47,9 +47,9 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 9: {
+          case 8: {
 
-            weeklyAppleSaleVolume_ = input.readDouble();
+            weeklyAppleSaleVolume_ = input.readInt32();
             break;
           }
           default: {
@@ -85,11 +85,11 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int WEEKLYAPPLESALEVOLUME_FIELD_NUMBER = 1;
-  private double weeklyAppleSaleVolume_;
+  private int weeklyAppleSaleVolume_;
   /**
-   * <code>double weeklyAppleSaleVolume = 1;</code>
+   * <code>int32 weeklyAppleSaleVolume = 1;</code>
    */
-  public double getWeeklyAppleSaleVolume() {
+  public int getWeeklyAppleSaleVolume() {
     return weeklyAppleSaleVolume_;
   }
 
@@ -107,8 +107,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (weeklyAppleSaleVolume_ != 0D) {
-      output.writeDouble(1, weeklyAppleSaleVolume_);
+    if (weeklyAppleSaleVolume_ != 0) {
+      output.writeInt32(1, weeklyAppleSaleVolume_);
     }
     unknownFields.writeTo(output);
   }
@@ -119,9 +119,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (weeklyAppleSaleVolume_ != 0D) {
+    if (weeklyAppleSaleVolume_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(1, weeklyAppleSaleVolume_);
+        .computeInt32Size(1, weeklyAppleSaleVolume_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -139,10 +139,8 @@ private static final long serialVersionUID = 0L;
     grpc.apple.smartfarming.WeeklyAppleSale other = (grpc.apple.smartfarming.WeeklyAppleSale) obj;
 
     boolean result = true;
-    result = result && (
-        java.lang.Double.doubleToLongBits(getWeeklyAppleSaleVolume())
-        == java.lang.Double.doubleToLongBits(
-            other.getWeeklyAppleSaleVolume()));
+    result = result && (getWeeklyAppleSaleVolume()
+        == other.getWeeklyAppleSaleVolume());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -155,8 +153,7 @@ private static final long serialVersionUID = 0L;
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + WEEKLYAPPLESALEVOLUME_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getWeeklyAppleSaleVolume()));
+    hash = (53 * hash) + getWeeklyAppleSaleVolume();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -294,7 +291,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      weeklyAppleSaleVolume_ = 0D;
+      weeklyAppleSaleVolume_ = 0;
 
       return this;
     }
@@ -371,7 +368,7 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(grpc.apple.smartfarming.WeeklyAppleSale other) {
       if (other == grpc.apple.smartfarming.WeeklyAppleSale.getDefaultInstance()) return this;
-      if (other.getWeeklyAppleSaleVolume() != 0D) {
+      if (other.getWeeklyAppleSaleVolume() != 0) {
         setWeeklyAppleSaleVolume(other.getWeeklyAppleSaleVolume());
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -403,28 +400,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private double weeklyAppleSaleVolume_ ;
+    private int weeklyAppleSaleVolume_ ;
     /**
-     * <code>double weeklyAppleSaleVolume = 1;</code>
+     * <code>int32 weeklyAppleSaleVolume = 1;</code>
      */
-    public double getWeeklyAppleSaleVolume() {
+    public int getWeeklyAppleSaleVolume() {
       return weeklyAppleSaleVolume_;
     }
     /**
-     * <code>double weeklyAppleSaleVolume = 1;</code>
+     * <code>int32 weeklyAppleSaleVolume = 1;</code>
      */
-    public Builder setWeeklyAppleSaleVolume(double value) {
+    public Builder setWeeklyAppleSaleVolume(int value) {
       
       weeklyAppleSaleVolume_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>double weeklyAppleSaleVolume = 1;</code>
+     * <code>int32 weeklyAppleSaleVolume = 1;</code>
      */
     public Builder clearWeeklyAppleSaleVolume() {
       
-      weeklyAppleSaleVolume_ = 0D;
+      weeklyAppleSaleVolume_ = 0;
       onChanged();
       return this;
     }
