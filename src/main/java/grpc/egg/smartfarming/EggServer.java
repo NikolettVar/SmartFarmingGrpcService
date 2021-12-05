@@ -20,6 +20,12 @@ public class EggServer{
 		//next, we need to create an instance of this server class
 		//we will pass it to the serverBuiler object
 		EggServer eggServer = new EggServer();
+		
+		//here we create an instance of the corresponding service registration class
+		JmDNSEggRegistration eggRegistration = new JmDNSEggRegistration();
+		
+		//now we can call the run() method defined in the registration class and provide the require arguments
+		eggRegistration.run("_eggs._tcp.local.", "EggService", 50051, "Running egg service...");
 		eggServer.start();
 		
 	/*first we must define the port
@@ -85,6 +91,8 @@ public class EggServer{
 			//result is rounded upwards to ensure farm always have sufficient food supply 
 			value = Math.ceil((userInput *0.009)*7);
 			
+			//after calculation the response value, we can build the response object
+			//and send the response back to the client
 			CalculateResponse response = CalculateResponse.newBuilder()
 					
 					.setWeeklyFoodAmount(value)

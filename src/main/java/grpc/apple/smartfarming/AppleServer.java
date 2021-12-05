@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import grpc.apple.smartfarming.AppleProductionServiceGrpc.AppleProductionServiceImplBase;
 import grpc.egg.smartfarming.EggServer;
+import grpc.egg.smartfarming.JmDNSEggRegistration;
 import grpc.egg.smartfarming.WeeklyEggCount;
 
 public class AppleServer {
@@ -20,6 +21,12 @@ public class AppleServer {
 		//next, we need to create an instance of this server class
 		//we will pass it to the serverBuiler object
 		AppleServer appleServer = new AppleServer();
+		
+		//here we create an instance of the corresponding service registration class
+		JmDNSAppleRegistration appleRegistration = new JmDNSAppleRegistration();
+		
+		//now we can call the run() method defined in the registration class and provide the require arguments
+		appleRegistration.run("_apples._tcp.local.", "AppleService", 50052, "Running apple service...");
 		appleServer.start();
 			
 	}

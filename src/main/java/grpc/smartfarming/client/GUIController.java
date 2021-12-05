@@ -11,12 +11,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.jmdns.ServiceInfo;
 import javax.swing.JOptionPane;
 
 import grpc.apple.smartfarming.ApplePrice;
 import grpc.apple.smartfarming.AppleProductionServiceGrpc;
 import grpc.apple.smartfarming.AppleProductionServiceGrpc.AppleProductionServiceBlockingStub;
 import grpc.apple.smartfarming.AppleProductionServiceGrpc.AppleProductionServiceStub;
+import grpc.apple.smartfarming.JmDNSAppleDiscovery;
 import grpc.apple.smartfarming.WeeklyApplePrice;
 import grpc.apple.smartfarming.WeeklyAppleSale;
 import grpc.apple.smartfarming.WeeklyAppleSaleValue;
@@ -26,6 +28,7 @@ import grpc.egg.smartfarming.DailyEggCount;
 import grpc.egg.smartfarming.EggProductionServiceGrpc;
 import grpc.egg.smartfarming.EggProductionServiceGrpc.EggProductionServiceBlockingStub;
 import grpc.egg.smartfarming.EggProductionServiceGrpc.EggProductionServiceStub;
+import grpc.egg.smartfarming.JmDNSEggDiscovery;
 import grpc.egg.smartfarming.WeeklyEggCount;
 
 //this class has the client and the GUI code
@@ -38,15 +41,27 @@ public class GUIController {
 	int port1 = 50051;
 	int port2 = 50052;
 	
+	//here we create a serviceInfo object to access the service
+	ServiceInfo eggServiceInfo = JmDNSEggDiscovery.run("_eggs._tcp.local.");
+	//System.out.println("service running on port: " + eggServiceInfo.getPort());	
+	
+	ServiceInfo appleServiceInfo = JmDNSAppleDiscovery.run("_apples._tcp.local.");
+	//System.out.println("service running on port: " + appleServiceInfo.getPort());	
+	
+	
+	
+	
 	//Here we create an instance of the ManagedChannel class, client communicates with the servers through these network connection channels 
 	//We need 1 channel per service, each one using the port numbers we defined for them in the Server classes
 	ManagedChannel channelEggs = ManagedChannelBuilder
-		.forAddress(host, port1)
+	.forAddress(host, port1)
+		//.forAddress(host, eggServiceInfo.getPort())
 		.usePlaintext()
 		.build();
 	
 	ManagedChannel channelApples = ManagedChannelBuilder
 		.forAddress(host, port2)
+		//.forAddress(host, appleServiceInfo.getPort())
 		.usePlaintext()
 		.build();
 		

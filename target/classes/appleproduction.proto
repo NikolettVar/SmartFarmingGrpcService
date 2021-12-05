@@ -26,7 +26,7 @@ service AppleProductionService{
 
 	}
 
-	//request messages contain a double, the amount of apples sold weekly
+	//request messages contain an int, the amount of apples sold weekly
 	message WeeklyAppleSale{
 		int32 weeklyAppleSaleVolume = 1;
 	}
