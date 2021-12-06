@@ -5,7 +5,7 @@ package grpc.apple.smartfarming;
 
 /**
  * <pre>
- *request messages contain a double, the amount of apples sold weekly
+ *request messages contain an int, the amount of apples sold weekly
  * </pre>
  *
  * Protobuf type {@code WeeklyAppleSale}
@@ -251,7 +251,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   *request messages contain a double, the amount of apples sold weekly
+   *request messages contain an int, the amount of apples sold weekly
    * </pre>
    *
    * Protobuf type {@code WeeklyAppleSale}

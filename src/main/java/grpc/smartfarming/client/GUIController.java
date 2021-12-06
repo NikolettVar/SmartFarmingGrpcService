@@ -5,9 +5,9 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,8 +28,10 @@ import grpc.egg.smartfarming.DailyEggCount;
 import grpc.egg.smartfarming.EggProductionServiceGrpc;
 import grpc.egg.smartfarming.EggProductionServiceGrpc.EggProductionServiceBlockingStub;
 import grpc.egg.smartfarming.EggProductionServiceGrpc.EggProductionServiceStub;
+
 import grpc.egg.smartfarming.JmDNSEggDiscovery;
 import grpc.egg.smartfarming.WeeklyEggCount;
+
 
 //this class has the client and the GUI code
 public class GUIController {
@@ -37,31 +39,42 @@ public class GUIController {
 	public static void main(String[] args) throws InterruptedException{
 		
 	//first we must define our host and port
-	String host = "localhost";
-	int port1 = 50051;
-	int port2 = 50052;
+	//String host = "localhost";
+	//int port1 = 50051;	
+	//int port2 = 50052;
 	
-	//here we create a serviceInfo object to access the service
-	ServiceInfo eggServiceInfo = JmDNSEggDiscovery.run("_eggs._tcp.local.");
-	//System.out.println("service running on port: " + eggServiceInfo.getPort());	
+	//here we create a serviceInfo object to discover Egg Service
+	ServiceInfo eggServiceInfo;
+	String service_type1 = "_egggrpc._tcp.local.";
+	//Now retrieving egg service info - all we are supplying is the service type
+	eggServiceInfo = JmDNSEggDiscovery.run(service_type1);
 	
-	ServiceInfo appleServiceInfo = JmDNSAppleDiscovery.run("_apples._tcp.local.");
-	//System.out.println("service running on port: " + appleServiceInfo.getPort());	
+	//serviceInfo object is used to retrieve the port number
+	//port number will be passed to the ChannelBuilder to create the channelEggs
+	int port1 = eggServiceInfo.getPort();
+	String host1 = "localhost";
 	
 	
+	//here we create another serviceInfo object to discover Apple Service
+	ServiceInfo appleServiceInfo;
+	String service_type2 = "_apple._tcp.local.";
+	//Now retrieving apple service info - all we are supplying is the service type
+	appleServiceInfo = JmDNSAppleDiscovery.run(service_type2);
 	
+	//serviceInfo object is used to retrieve the port number
+	//port number is passed to the ChannelBuilder to create channelApples
+	int port2 = appleServiceInfo.getPort();
+	String host2 = "localhost";	
 	
 	//Here we create an instance of the ManagedChannel class, client communicates with the servers through these network connection channels 
 	//We need 1 channel per service, each one using the port numbers we defined for them in the Server classes
 	ManagedChannel channelEggs = ManagedChannelBuilder
-	.forAddress(host, port1)
-		//.forAddress(host, eggServiceInfo.getPort())
+		.forAddress(host1, port1)
 		.usePlaintext()
 		.build();
 	
 	ManagedChannel channelApples = ManagedChannelBuilder
-		.forAddress(host, port2)
-		//.forAddress(host, appleServiceInfo.getPort())
+		.forAddress(host2, port2)
 		.usePlaintext()
 		.build();
 		
@@ -71,8 +84,7 @@ public class GUIController {
 	EggProductionServiceBlockingStub eggStub = EggProductionServiceGrpc.newBlockingStub(channelEggs);
 	
 	
-	//Unary rpc feedingCalculator implementation
-	//Now, inside a try/catch block we build out our request and reply objects
+	//Unary rpc feedingCalculator implementation on the client side
 	
 	//First we ask the user for an integer input, the number of hens the farm has this week
 	//User input is validated against empty input and non-numeric input
@@ -95,9 +107,11 @@ public class GUIController {
 		      hens = JOptionPane.showInputDialog(null, "Please enter the number of hens the farm has this week: ");
 		     }	
 		 }		
-	 
+	//JOPtionPane returns a String type, it needs to be parsed to an int value
 	 henNumber = Integer.parseInt(hens);	
 	
+	//Now, inside a try/catch block we build out our request and reply objects
+		
 	try {
 		CalculateRequest eggRequest1 = CalculateRequest.newBuilder().setNumberOfHens(henNumber).build();
 		CalculateResponse eggResponse1 = eggStub.feedingCalculator(eggRequest1);
@@ -115,6 +129,7 @@ public class GUIController {
 	
 	System.out.println();
 	
+	//Server streaming rpc applePriceChecker implementation on the client side
 	//user input for server streaming rpc with basic input validation
 	String userInput = " ";
 	userInput = JOptionPane.showInputDialog(null, "Please enter a character to display apple sales prices in the last 4 weeks: ");
@@ -124,7 +139,7 @@ public class GUIController {
 		   userInput = JOptionPane.showInputDialog(null, "Please enter a character to display apple sales prices in the last 4 weeks: ");
 	} 
 	 
-	//server streaming rpc applePriceChecker implementation
+	//Now, inside a try/catch block we build out our request and reply objects
 	try {
 		//first a request object needs to be built
 		ApplePrice appleRequest1 = ApplePrice.newBuilder().setAppleSalesPrice("Please display apple sales prices in the last 4 weeks ")
@@ -246,6 +261,7 @@ public class GUIController {
 	//this way the client does not have to wait for the server to return a response before sending out another message
 	AppleProductionServiceStub appleAsynchStub = AppleProductionServiceGrpc.newStub(channelApples);
 	
+	//Now, inside a try/catch block we build out our request and reply objects
 	try {
 		
 		//to observe the incoming responses from the server, we need to implement our own StreamObserver first
@@ -287,7 +303,7 @@ public class GUIController {
 		 String applesSoldWeekly = " ";	
 		 int soldApplesKg = 0;	
 		 
-		 //a while loop asks the user 4 times to enter weekly apples sales in kg
+		 //a for loop asks the user 4 times to enter weekly apples sales in kg
 		 for(int i = 0; i <= 3; i++) {
 			 applesSoldWeekly = JOptionPane.showInputDialog(null, "Please enter how many kg of apples the farm sold weekly over 4 weeks: ");
 			 
@@ -309,16 +325,26 @@ public class GUIController {
 			 soldApplesKg  = Integer.parseInt(applesSoldWeekly);		
 	
 			
-			//stream of messages from the client will be built 4 times
+			//outgoing stream of messages from the client will be built 4 times
 			requestObserver.onNext(WeeklyAppleSale.newBuilder().setWeeklyAppleSaleVolume(soldApplesKg).build());
+			
+			try {
 			Thread.sleep(400);
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}
 		 }
 		 
 		 System.out.println();
 		 System.out.println("Client has now sent its stream of messages to the server. ");
 		
-		requestObserver.onCompleted();		
+		requestObserver.onCompleted();	
+		
+		try {
 		Thread.sleep(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 	}catch(StatusRuntimeException e) {
 		e.printStackTrace();

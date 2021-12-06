@@ -6,13 +6,12 @@ import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 
 import grpc.egg.smartfarming.EggProductionServiceGrpc.EggProductionServiceImplBase;
 
-
-public class EggServer{
+public class EggServer{	
 	
+	//first we declare a server variable
 	private Server server;
 	
 	public static void main(String[] args) {
@@ -21,34 +20,19 @@ public class EggServer{
 		//we will pass it to the serverBuiler object
 		EggServer eggServer = new EggServer();
 		
-		//here we create an instance of the corresponding service registration class
-		JmDNSEggRegistration eggRegistration = new JmDNSEggRegistration();
-		
-		//now we can call the run() method defined in the registration class and provide the require arguments
-		eggRegistration.run("_eggs._tcp.local.", "EggService", 50051, "Running egg service...");
-		eggServer.start();
-		
-	/*first we must define the port
+		//now we can declare the variables needed for jmDNS service registration
 		int port = 50051;
-	
-	//next, we need to create an instance of this server class
-	//we will pass it to the serverBuiler object
-		EggServer eggServer = new EggServer();
+		String service_type = "_egggrpc._tcp.local.";
+		String service_name = "EggServer";
 		
-	//now we build out our eggServer within Exception handling try/catch block
-		try {
-			System.out.println("Egg Server starting up...");
-			Server server = ServerBuilder.forPort(port)
-				.addService(eggServer)
-				.build()
-				.start();
-			System.out.println("Egg Server is running on port number " + port);
-		server.awaitTermination();
+		//here we create an instance of the corresponding service registration class
+		JmDNSEggRegistration eggReg = new JmDNSEggRegistration();
+		//now we can call the run() method defined in the registration class and provide the required arguments
+		eggReg.run(port, service_type, service_name);
 		
-		}catch(Exception e) {
-			e.printStackTrace();
-		}*/
-
+		//now the Egg Server is ready to be started up		
+		eggServer.start();	
+		
 	}
 	
 	//now we define our start() method to build our eggServer
@@ -75,10 +59,12 @@ public class EggServer{
 		}
 		
 		
-	//a static inner class contains our server streaming rpc method implementation
+	//a static inner class contains the implementation of the unary and client streaming rpc
 	static class EggServerImpl extends EggProductionServiceImplBase{
 	
 		//now we define our unary rpc method feedingCalculator()
+		//the client sends one message (the number of hens)
+		//and receives one response (the amount of food the hens week for 7 days)
 		@Override
 		public void feedingCalculator(CalculateRequest request, StreamObserver<CalculateResponse> responseObserver) {
 			System.out.println("EggServer is being called, calculating response...");
@@ -98,10 +84,22 @@ public class EggServer{
 					.setWeeklyFoodAmount(value)
 					.build();
 			responseObserver.onNext(response);
+			
+			try {
+				//wait for a second
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {				
+				e.printStackTrace();
+			}
+			
+			
 			responseObserver.onCompleted();
 		}
 		
 		//client streaming rpc weeklyTotalEggCount() server side implementation
+		//the client send in a stream of messages (the daily egg count for 7 days)
+		//and receives one response, the weekly total egg count
+		
 		//we need to observe the stream of messages coming in from the client
 		//this will be the return type of the weeklyTotalEggCount() method
 		@Override
@@ -127,8 +125,7 @@ public class EggServer{
 					//incoming daily egg counts are added into the ArrayList
 					eggList.add(request.getDailyEggCount());		           
 	
-				}
-	
+				}	
 			
 				@Override
 				public void onError(Throwable t) {
@@ -136,7 +133,7 @@ public class EggServer{
 					t.printStackTrace();
 					
 				}
-	
+				
 				//here we create the response when client finished to stream incoming messages
 				@Override
 				public void onCompleted() {

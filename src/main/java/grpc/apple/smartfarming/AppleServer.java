@@ -14,19 +14,25 @@ import grpc.egg.smartfarming.WeeklyEggCount;
 
 public class AppleServer {
 	
+	//first we declare a server variable
 	private Server server;
 	
 	public static void main(String[] args) {		
 		
-		//next, we need to create an instance of this server class
+		//now we need to create an instance of this server class
 		//we will pass it to the serverBuiler object
 		AppleServer appleServer = new AppleServer();
 		
+		//now we can declare the variables needed for jmDNS service registration
+		int port2 = 50052;
+		String service_type2 = "_apple._tcp.local.";
+		String service_name2 = "AppleServer";
 		//here we create an instance of the corresponding service registration class
-		JmDNSAppleRegistration appleRegistration = new JmDNSAppleRegistration();
+		JmDNSAppleRegistration appleReg = new JmDNSAppleRegistration();
+		//now we can call the run() method defined in the registration class and provide the required arguments
+		appleReg.run(port2, service_type2, service_name2);
 		
-		//now we can call the run() method defined in the registration class and provide the require arguments
-		appleRegistration.run("_apples._tcp.local.", "AppleService", 50052, "Running apple service...");
+		//now the Egg Server is ready to be started up	
 		appleServer.start();
 			
 	}
@@ -54,8 +60,12 @@ public class AppleServer {
 			
 	}
 	
-	//a static inner class contains our server streaming rpc method implementation
+	//a static inner class contains the implementations for the server streaming and bidirectional streaming rpc
 	static class AppleServerImpl extends AppleProductionServiceImplBase{
+		
+		//now we can provide the server side implementation of the server streaming rpc
+		//the client sends in one request (a simple character) and receives a stream of responses from the server:
+		//the weekly sales prices of apple in the last 4 weeks per kg of apple
 		@Override
 		public void applePriceChecker(ApplePrice request, StreamObserver<WeeklyApplePrice> responseObserver) {
 			System.out.println("Apple Server is being called, returning responses...");
@@ -98,7 +108,10 @@ public class AppleServer {
 			responseObserver.onCompleted();
 		}
 		
-		//bidirectional rpc server side implementation
+		//bidirectional rpc server side implementation for weeklyApplesSales() rpc method
+		//the client sends in a stream of request (the amount of apples sold weekly in the last 4 weeks in kg(
+		//and receives a stream of responses from the server (the value of apples sales in the last 4 weeks in €)
+		
 		//we need to observe the stream of messages coming in from the client
 		//this will be the return type of the weeklyAppleSales() method
 		
@@ -151,8 +164,7 @@ public class AppleServer {
 					
 							
 				
-					//now we can build the responses the server will send back to the client
-								
+					//now we can build the responses the server will send back to the client						
 					
 					WeeklyAppleSaleValue.Builder reply = WeeklyAppleSaleValue.newBuilder();
 					

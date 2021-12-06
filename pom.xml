@@ -4,8 +4,8 @@
   <artifactId>SmartFarmingGrpcService</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
-  <dependencies>
-
+  <dependencies> 
+  
 		<dependency>
 			<groupId>javax.jmdns</groupId>
 			<artifactId>jmdns</artifactId>
