@@ -33,17 +33,12 @@ import grpc.egg.smartfarming.JmDNSEggDiscovery;
 import grpc.egg.smartfarming.WeeklyEggCount;
 
 
-//this class has the client and the GUI code
+//this class has the client and the simple GUI code
 public class GUIController {
 
 	public static void main(String[] args) throws InterruptedException{
-		
-	//first we must define our host and port
-	//String host = "localhost";
-	//int port1 = 50051;	
-	//int port2 = 50052;
 	
-	//here we create a serviceInfo object to discover Egg Service
+	//first, we create a serviceInfo object to discover Egg Service through jmDNS
 	ServiceInfo eggServiceInfo;
 	String service_type1 = "_egggrpc._tcp.local.";
 	//Now retrieving egg service info - all we are supplying is the service type
@@ -55,7 +50,7 @@ public class GUIController {
 	String host1 = "localhost";
 	
 	
-	//here we create another serviceInfo object to discover Apple Service
+	//second, we create another serviceInfo object to discover Apple Service through jmDNS
 	ServiceInfo appleServiceInfo;
 	String service_type2 = "_apple._tcp.local.";
 	//Now retrieving apple service info - all we are supplying is the service type
@@ -66,7 +61,7 @@ public class GUIController {
 	int port2 = appleServiceInfo.getPort();
 	String host2 = "localhost";	
 	
-	//Here we create an instance of the ManagedChannel class, client communicates with the servers through these network connection channels 
+	//Next, we create an instance of the ManagedChannel class, client communicates with the servers through these network connection channels 
 	//We need 1 channel per service, each one using the port numbers we defined for them in the Server classes
 	ManagedChannel channelEggs = ManagedChannelBuilder
 		.forAddress(host1, port1)
@@ -84,34 +79,32 @@ public class GUIController {
 	EggProductionServiceBlockingStub eggStub = EggProductionServiceGrpc.newBlockingStub(channelEggs);
 	
 	
-	//Unary rpc feedingCalculator implementation on the client side
-	
+	//Unary rpc feedingCalculator implementation on the client side	
 	//First we ask the user for an integer input, the number of hens the farm has this week
 	//User input is validated against empty input and non-numeric input
-
-
-	 String hens = " ";	
-	 int henNumber = 0;		
 	
-	 hens = JOptionPane.showInputDialog(null, "Please enter the number of hens the farm has this week: ");
+	 String hens = " ";	
+	 int henNumber = 0;	
 	 
-		 if(hens.length() < 1) {
+	 hens = JOptionPane.showInputDialog(null, "Please enter the number of hens the farm has this week: ");
+	 	//empty input is not accepted
+	 	if(hens.length() < 1) {
 			   JOptionPane.showMessageDialog(null, "This field cannot be blank. Please enter a numeric value");
 			   hens = JOptionPane.showInputDialog(null, "Please enter the number of hens the farm has this week: ");
 		} 
 		 else {
+			 //A simple regular expression is used to accept numeric input only
 			 Pattern p = Pattern.compile("^[0-9]*$");
 		     Matcher m = p.matcher(hens);
-		     if (!m.find()) { // if pattern doesn't match (not found) 
+		     if (!m.find()) { // if pattern doesn't match 
 		      JOptionPane.showMessageDialog(null, "Please enter numbers only ");
 		      hens = JOptionPane.showInputDialog(null, "Please enter the number of hens the farm has this week: ");
 		     }	
 		 }		
 	//JOPtionPane returns a String type, it needs to be parsed to an int value
 	 henNumber = Integer.parseInt(hens);	
-	
-	//Now, inside a try/catch block we build out our request and reply objects
-		
+	 
+	//Now, inside a try/catch block we build out our request and reply objects		
 	try {
 		CalculateRequest eggRequest1 = CalculateRequest.newBuilder().setNumberOfHens(henNumber).build();
 		CalculateResponse eggResponse1 = eggStub.feedingCalculator(eggRequest1);
@@ -219,7 +212,7 @@ public class GUIController {
 			 else {
 				 Pattern p = Pattern.compile("^[0-9]*$");
 			     Matcher m = p.matcher(dailyEggNumber);
-			     if (!m.find()) { // if pattern doesn't match (not found) 
+			     if (!m.find()) { // if pattern doesn't match 
 			      JOptionPane.showMessageDialog(null, "Please enter numbers only ");
 			      dailyEggNumber = JOptionPane.showInputDialog(null, "Please enter the number of eggs you collected daily: ");
 			     }	
@@ -230,15 +223,25 @@ public class GUIController {
 	
 		//stream of messages from the client will be built now 7 times
 		requestObserver.onNext(DailyEggCount.newBuilder().setDailyEggCount(dailyEggs).build());
+		
+		try {
 		Thread.sleep(400);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 		counter++;		
 	 }	
 		
 		System.out.println();
 		System.out.println("Client has now sent its stream of messages to the server. ");
 		
-		requestObserver.onCompleted();		
+		requestObserver.onCompleted();
+		
+		try {
 		Thread.sleep(5000);
+		}catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 	}catch(StatusRuntimeException e) {
 		e.printStackTrace();
@@ -249,7 +252,7 @@ public class GUIController {
 	try {
 		channelEggs.shutdown().awaitTermination(5, TimeUnit.SECONDS);
 	} catch (InterruptedException e) {				
-		System.out.println("Error, closing down channel");
+		System.out.println("An error occurred, closing down channel");
 		e.printStackTrace();
 	}
 	
@@ -352,9 +355,9 @@ public class GUIController {
 
 	//we are finished using channelApples, we can shut it down now
 		try {
-			channelApples.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+			channelApples.shutdown().awaitTermination(20, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {				
-			System.out.println("Error, closing down channel");
+			System.out.println("An error occurred, closing down channel");
 			e.printStackTrace();
 		}	
 

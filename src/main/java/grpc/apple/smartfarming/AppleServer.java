@@ -53,9 +53,9 @@ public class AppleServer {
 		//we must ensure server keeps running until client needs it
 		try {
 			server.awaitTermination();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+		} catch (InterruptedException e) {			
 			e.printStackTrace();
+			System.out.println("Apple Server interrupted.");
 		}
 			
 	}
@@ -78,8 +78,7 @@ public class AppleServer {
 			double price1 = 2.29;
 			double price2 = 2.19;
 			double price3 = 2.03;
-			double price4 = 2.08;
-			
+			double price4 = 2.08;			
 			
 			WeeklyApplePrice.Builder response = WeeklyApplePrice.newBuilder();
 			
@@ -101,8 +100,7 @@ public class AppleServer {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {				
 				e.printStackTrace();
-			}				
-				
+			}					
 			
 			
 			responseObserver.onCompleted();

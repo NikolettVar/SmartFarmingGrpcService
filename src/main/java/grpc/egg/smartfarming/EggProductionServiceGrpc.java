@@ -130,7 +130,8 @@ public final class EggProductionServiceGrpc {
 
     /**
      * <pre>
-     *client streaming rpc service: client sends a stream of requests, receives 1 response from server
+     *client streaming rpc service: client sends a stream of requests
+     *and receives 1 response from server
      * </pre>
      */
     public io.grpc.stub.StreamObserver<grpc.egg.smartfarming.DailyEggCount> weeklyTotalEggCount(
@@ -189,7 +190,8 @@ public final class EggProductionServiceGrpc {
 
     /**
      * <pre>
-     *client streaming rpc service: client sends a stream of requests, receives 1 response from server
+     *client streaming rpc service: client sends a stream of requests
+     *and receives 1 response from server
      * </pre>
      */
     public io.grpc.stub.StreamObserver<grpc.egg.smartfarming.DailyEggCount> weeklyTotalEggCount(

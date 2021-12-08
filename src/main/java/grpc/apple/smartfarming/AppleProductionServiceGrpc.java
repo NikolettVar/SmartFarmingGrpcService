@@ -126,7 +126,8 @@ public final class AppleProductionServiceGrpc {
 
     /**
      * <pre>
-     *server streaming rpc service: 1 request is sent by client, server sends a stream of responses
+     *server streaming rpc service: 1 request is sent by client
+     *the server sends a stream of responses
      * </pre>
      */
     public void applePriceChecker(grpc.apple.smartfarming.ApplePrice request,
@@ -136,7 +137,8 @@ public final class AppleProductionServiceGrpc {
 
     /**
      * <pre>
-     *bidirectional streaming rpc service: client sends a stream of requests, receives a stream of responses from server
+     *bidirectional streaming rpc service: client sends a stream of requests
+     *and receives a stream of responses from server
      * </pre>
      */
     public io.grpc.stub.StreamObserver<grpc.apple.smartfarming.WeeklyAppleSale> weeklyAppleSales(
@@ -187,7 +189,8 @@ public final class AppleProductionServiceGrpc {
 
     /**
      * <pre>
-     *server streaming rpc service: 1 request is sent by client, server sends a stream of responses
+     *server streaming rpc service: 1 request is sent by client
+     *the server sends a stream of responses
      * </pre>
      */
     public void applePriceChecker(grpc.apple.smartfarming.ApplePrice request,
@@ -198,7 +201,8 @@ public final class AppleProductionServiceGrpc {
 
     /**
      * <pre>
-     *bidirectional streaming rpc service: client sends a stream of requests, receives a stream of responses from server
+     *bidirectional streaming rpc service: client sends a stream of requests
+     *and receives a stream of responses from server
      * </pre>
      */
     public io.grpc.stub.StreamObserver<grpc.apple.smartfarming.WeeklyAppleSale> weeklyAppleSales(
@@ -231,7 +235,8 @@ public final class AppleProductionServiceGrpc {
 
     /**
      * <pre>
-     *server streaming rpc service: 1 request is sent by client, server sends a stream of responses
+     *server streaming rpc service: 1 request is sent by client
+     *the server sends a stream of responses
      * </pre>
      */
     public java.util.Iterator<grpc.apple.smartfarming.WeeklyApplePrice> applePriceChecker(

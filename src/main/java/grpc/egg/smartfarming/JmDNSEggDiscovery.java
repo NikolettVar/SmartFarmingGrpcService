@@ -21,15 +21,16 @@ public class JmDNSEggDiscovery {
 		//all the 3 methods accept a ServiceEvent parameter
 		//getInfo() method can be called on it to retrieve required information about the service
 		public void serviceAdded(ServiceEvent event) {
-			
+			ServiceInfo serviceInfo = event.getInfo();
+			this.setServiceInfo(serviceInfo);
+			this.setPort(serviceInfo.getPort());
 			System.out.println("\nEgg Service Added " + event.getInfo());
 			
 		}
 
 		public void serviceRemoved(ServiceEvent event) {
 			
-			System.out.println("Egg Service Removed " + event.getInfo());
-			
+			System.out.println("Egg Service Removed " + event.getInfo());			
 		}
 
 		public void serviceResolved(ServiceEvent event) {
@@ -93,7 +94,7 @@ public class JmDNSEggDiscovery {
 			serviceInfo = msl.getServiceInfo();
 			//retrieve the port number the service is available on 
 			port = msl.getPort();
-			System.out.println("Egg Server's port is retreived from jmDNS: " + port);
+			System.out.println("Egg Server's port is retrieved from jmDNS: " + port);
 			
 			jmdns.close();
 			

@@ -21,7 +21,9 @@ public class JmDNSAppleDiscovery {
 		//all the 3 methods accept a ServiceEvent parameter
 		//getInfo() method can be called on it to retrieve required information about the service
 		public void serviceAdded(ServiceEvent event) {
-			
+			ServiceInfo serviceInfo2 = event.getInfo();
+			this.setServiceInfo(serviceInfo2);
+			this.setPort(serviceInfo2.getPort());
 			System.out.println("\nApple Service Added " + event.getInfo());
 			
 		}
@@ -92,7 +94,7 @@ public class JmDNSAppleDiscovery {
 			serviceInfo2 = msl2.getServiceInfo();
 			//retrieve the port number the service is available on 
 			port2 = msl2.getPort();
-			System.out.println("Apple Server's port is retreived from jmDNS: " + port2);
+			System.out.println("Apple Server's port is retrieved from jmDNS: " + port2);
 			
 			jmdns.close();
 			

@@ -13,27 +13,26 @@ public class JmDNSEggRegistration {
 	
 	public void run(int port, String service_type, String service_name) {
 
-		//create a jmDNS object instance
-		try {
-			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+	//create a jmDNS object instance
+	try {
+		JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 								
-			int service_port = port;
-			String service_desc = "Integration of jmDNS with gRPC";				
+		int service_port = port;
+		String service_desc = "Integration of jmDNS with gRPC";				
 			
-			//create ServiceInfo object with the 3 required parameters		
-			ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port, service_desc);
+		//create ServiceInfo object with the 3 required parameters		
+		ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port, service_desc);
 			
 			
-			 //register the service with jmDNS	 
+		//register the service with jmDNS	 
 			
-			jmdns.registerService(serviceInfo);
+		jmdns.registerService(serviceInfo);
 			
-			System.out.printf("Registering Egg Service with type: %s and name: %s on port: %d ", service_type, service_name, service_port);
-			
-			//sleep for 10 seconds
-			Thread.sleep(10000);
+		System.out.printf("Registering Egg Service with type: %s and name: %s on port: %d ", service_type, service_name, service_port);
+	
+		Thread.sleep(3000);
 					
-			System.out.println("\nEgg Service Registered");
+		System.out.println("\nEgg Service Registered");
 			
 			
 		//handle possible expections

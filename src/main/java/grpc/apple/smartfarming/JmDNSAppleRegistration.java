@@ -29,8 +29,7 @@ public class JmDNSAppleRegistration {
 			
 			System.out.printf("Registering Apple Service with type: %s and name: %s on port: %d ", service_type2, service_name2, service_port2);
 			
-			//sleep for 10 seconds
-			Thread.sleep(10000);
+			Thread.sleep(3000);
 			System.out.println("\nApple Service Registered");
 			
 			

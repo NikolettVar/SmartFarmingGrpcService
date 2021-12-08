@@ -51,48 +51,47 @@ public class EggServer{
 			//we must ensure server keeps running until client needs it
 			try {
 				server.awaitTermination();
-			} catch (InterruptedException e) {
-				
+			} catch (InterruptedException e) {				
 				e.printStackTrace();
+				System.out.println("Egg Server interrupted.");
 			}
 				
 		}
 		
 		
 	//a static inner class contains the implementation of the unary and client streaming rpc
-	static class EggServerImpl extends EggProductionServiceImplBase{
-	
+	static class EggServerImpl extends EggProductionServiceImplBase{	
+		
 		//now we define our unary rpc method feedingCalculator()
 		//the client sends one message (the number of hens)
 		//and receives one response (the amount of food the hens week for 7 days)
+		
 		@Override
 		public void feedingCalculator(CalculateRequest request, StreamObserver<CalculateResponse> responseObserver) {
 			System.out.println("EggServer is being called, calculating response...");
 			
 			//we now read the request, create a response and send back that response
 			int userInput = request.getNumberOfHens();
-			double value = Double.NaN;
+			double value = Double.NaN;	
 			
 			//calculate the feeding needs of the hens for 7 days
-			//result is rounded upwards to ensure farm always have sufficient food supply 
-			value = Math.ceil((userInput *0.009)*7);
+			//result is rounded upwards to ensure farm always have sufficient food supply
+			
+			value = Math.ceil((userInput *0.009)*7);	
 			
 			//after calculation the response value, we can build the response object
 			//and send the response back to the client
-			CalculateResponse response = CalculateResponse.newBuilder()
-					
+			CalculateResponse response = CalculateResponse.newBuilder()					
 					.setWeeklyFoodAmount(value)
 					.build();
-			responseObserver.onNext(response);
 			
+			responseObserver.onNext(response);			
 			try {
 				//wait for a second
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {				
 				e.printStackTrace();
-			}
-			
-			
+			}			
 			responseObserver.onCompleted();
 		}
 		
